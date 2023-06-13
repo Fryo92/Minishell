@@ -6,7 +6,7 @@
 /*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:53:36 by mgauvrit          #+#    #+#             */
-/*   Updated: 2023/05/31 02:03:11 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:26:28 by mgauvrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int ac, char **av, char **envp)
 	t_list	*env;
 
 	(void)av;
+	rl_outstream = stderr;
 	if (ac > 1)
 		return (write(2, "Try to launch ./minishell without arguments\n", 20));
 	env = env_init(envp);

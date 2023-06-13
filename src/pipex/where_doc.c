@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   where_doc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:39:48 by mgauvrit          #+#    #+#             */
-/*   Updated: 2023/05/31 02:26:02 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:54:33 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	count_hd(char *str)
 	return (nb);
 }
 
-static void	openfileshd(int index, t_here *here)
+void	openfileshd(int index, t_here *here)
 {
 	char	*s;
 
@@ -57,29 +57,6 @@ static void	openfileshd(int index, t_here *here)
 	close(here[index].pipe[0]);
 }
 
-static void	child_hd(t_list *env, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	signal(SIGINT, &handler_hd);
-	while (i < data->here_nb)
-	{
-		openfileshd(i, data->here);
-		i++;
-	}
-	i = -1;
-	fprintf(stderr, "%d\n", data->here_nb);
-	while (++i < data->here_nb)
-		free(data->here[i].delim);
-	free(data->here);
-	free_tab(data->av);
-	free(data->pid);
-	free_lst(env);
-	free(data->env);
-	exit(0);
-}
-
 static int	ft_getdelims(t_list *env, t_data *data)
 {
 	int		i;
@@ -88,7 +65,6 @@ static int	ft_getdelims(t_list *env, t_data *data)
 
 	i = -1;
 	k = 0;
-	here_alloc(data);
 	while (data->av[++i])
 	{
 		cmd = ft_split(data->av[i], ' ');

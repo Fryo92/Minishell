@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:24:27 by mgauvrit          #+#    #+#             */
-/*   Updated: 2023/05/30 17:06:59 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:03:39 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	exec_builtins(char **cmd, t_data *data, t_list *env, int toggle)
 		exit_cmd(env, data, cmd, toggle);
 	if (toggle)
 	{
+		free(data->here);
 		free_tab(cmd);
 		free_tab(data->av);
 		free_lst(env);

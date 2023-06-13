@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   where_doc_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 18:47:02 by abiddane          #+#    #+#             */
-/*   Updated: 2023/05/31 02:17:27 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 10:55:37 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	here_alloc(t_data *data)
+int	here_alloc(t_data *data)
 {
 	data->here = ft_calloc(sizeof(t_here), data->here_nb);
 	if (!data->here)
-		exit(-1);
+		return (1);
+	return (0);
 }
 
 void	free_here(t_data *data)

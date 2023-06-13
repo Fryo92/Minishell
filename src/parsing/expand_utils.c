@@ -22,7 +22,9 @@ void	free_str(char *cmd, char *value, char *name, char *after)
 
 int	push_i(t_list *env, char *name, int i)
 {
-	if (!name || !search_var(env, name))
+	if (!name[0])
+		return (i + 1);
+	else if (!search_var(env, name))
 		return (i);
 	else
 		return (i + ft_strlen(name));
@@ -30,7 +32,7 @@ int	push_i(t_list *env, char *name, int i)
 
 void	tab_value_err(t_data *data, char **tab, char *str, int i)
 {
-	tab[0] = get_before_expand(str);
+	tab[0] = get_before_expand(str, i);
 	tab[1] = get_after_expand(str + i + 2);
 	tab[2] = get_expand_name(str + i + 1);
 	tab[3] = ft_itoa(data->status);
@@ -38,7 +40,7 @@ void	tab_value_err(t_data *data, char **tab, char *str, int i)
 
 void	tab_value(t_list *env, char **tab, char *str, int i)
 {
-	tab[0] = get_before_expand(str);
+	tab[0] = get_before_expand(str, i);
 	tab[1] = get_after_expand(str + i + 1);
 	tab[2] = get_expand_name(str + i + 1);
 	tab[3] = init_value(env, str, tab[2], &i);

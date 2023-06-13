@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+t_list	*g_env;
+
 void	handler_sig(int sig)
 {
 	t_data	*data;
@@ -35,6 +37,32 @@ void	handler_cmd(int sig)
 	data->status = 130;
 }
 
+void	child_hd(t_list *env, t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (!g_env)
+		g_env = env;
+	signal(SIGINT, &handler_hd);
+	while (i < data->here_nb)
+	{
+		openfileshd(i, data->here);
+		i++;
+	}
+	i = -1;
+	while (++i < data->here_nb)
+		free(data->here[i].delim);
+	free_lst(env);
+	free(data->here);
+	free_tab(data->av);
+	free(data->pid);
+	free(data->env);
+	exit(0);
+}
+
 void	handler_hd(int sig)
 {
 	t_data	*data;
@@ -52,7 +80,8 @@ void	handler_hd(int sig)
 		i++;
 	}
 	free_tab(data->av);
-	free_tab(data->env);
+	free_lst(g_env);
+	free(data->env);
 	free(data->pid);
 	free(data->here);
 	exit(130);

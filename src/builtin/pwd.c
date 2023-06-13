@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:26:20 by abiddane          #+#    #+#             */
-/*   Updated: 2023/05/30 18:07:03 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:57:00 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void	pwd_cmd(t_data *data, int toggle)
 		return ;
 	if (getcwd(buf, BUFFER_SIZE) == NULL)
 	{
-		handle_perror("cd", data, buf, toggle);
+		handle_perror("pwd", data, buf, toggle);
 		return ;
 	}
-	printf("%s\n", buf);
+	ft_putstr_fd(buf, 1);
+	ft_putstr_fd("\n", 1);
 	free(buf);
 	data->status = 0;
 }

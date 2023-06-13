@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:25:53 by abiddane          #+#    #+#             */
-/*   Updated: 2023/05/30 18:06:42 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:15:54 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ static int	check_echo_flag(char *str)
 	i = 0;
 	if (str[0] == '-')
 	{
-		while (str[++i])
+		if (str[1] == 'n')
 		{
-			if (str[i] != 'n')
-				return (1);
+			while (str[++i])
+			{
+				if (str[i] != 'n')
+					return (1);
+			}
+			return (0);
 		}
-		return (0);
+		return (1);
 	}
 	return (1);
 }
@@ -38,11 +42,11 @@ void	echo_flag(char **cmd)
 		i++;
 	while (cmd[i])
 	{
-		printf("%s", cmd[i]);
+		ft_putstr_fd(cmd[i], 2);
 		i++;
 		if (!cmd[i])
 			return ;
-		printf(" ");
+		ft_putstr_fd(" ", 2);
 	}
 }
 
@@ -67,8 +71,7 @@ void	echo_cmd(char **cmd, t_data *data)
 				data->status = 0;
 				return ;
 			}
-			if (cmd[i - 1][0])
-				printf(" ");
+			printf(" ");
 		}
 	}
 }

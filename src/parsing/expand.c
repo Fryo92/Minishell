@@ -18,6 +18,13 @@ char	*get_expand_name(char *str)
 	char	*var_name;
 
 	i = 0;
+	if (ft_isdigit(str[0]) && ft_isdigit(str[i + 1]))
+	{
+		var_name = malloc(2);
+		var_name[0] = str[0];
+		var_name[1] = '\0';
+		return (var_name);
+	}
 	while (str[i] && ft_isalnum(str[i]))
 		i++;
 	var_name = malloc(i + 1);
@@ -33,19 +40,19 @@ char	*get_expand_name(char *str)
 	return (var_name);
 }
 
-char	*get_before_expand(char *str)
+char	*get_before_expand(char *str, int j)
 {
 	int		i;
 	char	*ret;
 
 	i = 0;
-	while (str[i] && str[i] != '$')
+	while (str[i] && i < j)
 		i++;
 	ret = malloc(i + 1);
 	if (!ret)
 		return (NULL);
 	i = 0;
-	while (str[i] && str[i] != '$')
+	while (str[i] && i < j)
 	{
 		ret[i] = str[i];
 		i++;
@@ -62,7 +69,11 @@ char	*get_after_expand(char *str)
 
 	i = 0;
 	while (str[i] && ft_isalnum(str[i]))
+	{
 		i++;
+		if (ft_isdigit(str[0]) && ft_isdigit(str[1]))
+			break ;
+	}
 	ret = malloc(ft_strlen(str) - i + 1);
 	if (!ret)
 		return (NULL);

@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   security.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 15:01:05 by mgauvrit          #+#    #+#             */
-/*   Updated: 2023/05/28 13:04:44 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:08:13 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	safe_piping(int *pipefd)
+int	safe_piping(int *pipefd)
 {
 	if (pipe(pipefd) == -1)
 	{
 		perror("pipefd");
-		exit(errno);
+		return (-1);
 	}
+	return (0);
 }
 
 void	safe_exe(t_data *data, char **cmd, char **env)

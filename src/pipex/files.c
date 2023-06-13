@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:56:49 by mgauvrit          #+#    #+#             */
-/*   Updated: 2023/05/31 01:02:32 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:34:27 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	file_error(t_data *data, t_list *env, char **cmd, char *msg)
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd(": Permission denied\n", 2);
 	free_data_env(env, data, cmd, 2);
-	exit(127);
+	exit(1);
 }
 
 void	open_in(t_data *data, t_list *env, char **cmd, int i)

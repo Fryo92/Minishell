@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 11:17:28 by mgauvrit          #+#    #+#             */
-/*   Updated: 2023/05/31 03:13:21 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:20:44 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_here
 typedef struct s_data
 {
 	int		pipefd[2];
+	int		builtin;
+	int		builtout;
 	int		fdin;
 	int		fdout;
 	int		nbcmd;
@@ -125,7 +127,7 @@ void	tab_value(t_list *env, char **tab, char *str, int i);
 int		push_to_expand(char *str, int i);
 	/* expand.c */
 char	*get_expand_name(char *str);
-char	*get_before_expand(char *str);
+char	*get_before_expand(char *str, int j);
 char	*get_after_expand(char *str);	
 char	*init_value(t_list *env, char *str, char *name, int *i);	
 char	*expand(t_list *env, char *cmd, t_data *data);
@@ -142,8 +144,9 @@ char	*new_line(char *read);
 /*Pipex*/
 	/* exec.c */
 int		exec_solo_built(t_list *env, t_data *data);	
-void	exec(t_list *env, t_data *data, int i);
+int		exec(t_list *env, t_data *data, int i);
 int		is_a_built(t_list *env, t_data *data);
+int		pipex_heart(t_list *env, t_data *data);
 	/*files.c*/
 void	open_in(t_data *data, t_list *env, char **cmd, int i);
 void	open_out(t_data *data, t_list *env, char **cmd, int i);
@@ -169,15 +172,16 @@ void	child_process(t_data *data, t_list *env, int i);
 void	parent_process(t_data *data);
 int		pipex(char *read, t_list *env);
 	/*security.c*/
-void	safe_piping(int *pipefd);
+int		safe_piping(int *pipefd);
 void	safe_exe(t_data *data, char **cmd, char **env);
 void	safe_close(int fd);
 void	safe_dup(int oldfd, int newfd);
 	/*where_doc.c*/
-int		count_hd(char *str);	
+int		count_hd(char *str);
+void	openfileshd(int index, t_here *here);	
 int		here_doc(t_list *env, t_data *data);
 	/* where_doc_utils.c */
-void	here_alloc(t_data *data);
+int		here_alloc(t_data *data);
 void	free_here(t_data *data);
 int		gdelims_aux(t_data *data, char **cmd, int k);
 
@@ -187,7 +191,9 @@ int		gdelims_aux(t_data *data, char **cmd, int k);
 	/* signal. c*/
 void	handler_sig(int sig);
 void	handler_hd(int sig);
+void	child_hd(t_list *env, t_data *data);
 void	handler_cmd(int sig);
+void	handler_prout(int sig);
 
 /* -------------------------------------------------------------------------- */
 
@@ -225,6 +231,7 @@ int		ft_atoi(const char *nptr);
 void	ft_putendl_fd(char *s, int fd);
 char	*ft_strstr(char *str, char *to_find);
 int		isntempty(char **cmd);
+int		ft_isdigit(int c);
 
 t_data	*starton( void );
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:53:11 by mgauvrit          #+#    #+#             */
-/*   Updated: 2023/05/31 03:13:13 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:04:56 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ static	void	open_redir(t_data *data, t_list *env, char **cmd, int i)
 	if (type == 3)
 		open_in(data, env, cmd, i);
 	if (data->here_nb && type == 4)
-	{
 		safe_dup(data->here[data->here_cmp].pipe[0], STDIN_FILENO);
-		data->here_cmp++;
-	}
 	if (type == 1 || type == 2)
 		dup_n_close(data->fdout, STDOUT_FILENO);
 	if (type == 3)
@@ -69,10 +66,8 @@ static	void	open_redir(t_data *data, t_list *env, char **cmd, int i)
 void	redir_finder(t_data *data, t_list *env, char **cmd, int toggle)
 {
 	int	i;
-	int	redir;
 
 	i = 0;
-	redir = 0;
 	if (data->index != 0)
 		dup_n_close(data->prev_pipe, STDIN_FILENO);
 	if (data->index != data->nbcmd - 1)
@@ -87,5 +82,4 @@ void	redir_finder(t_data *data, t_list *env, char **cmd, int toggle)
 	i = -1;
 	while (++i < data->here_nb)
 		safe_close(data->here[i].pipe[0]);
-
 }

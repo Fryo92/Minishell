@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgauvrit <mgauvrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abiddane <abiddane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:33:39 by abiddane          #+#    #+#             */
-/*   Updated: 2023/05/31 02:45:52 by mgauvrit         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:06:28 by abiddane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	free_data_env(t_list *env, t_data *data, char **cmd, int toggle)
 		free_lst(env);
 	if (toggle != 3)
 		free(data->env);
+	if (toggle == 4)
+		free(data->pid);
 	if (cmd)
 		free_tab(cmd);
 	if (toggle == 2 && data->path)
 		free_tab(data->path);
-	if (toggle == 4 || toggle == 2)
+	if ((toggle == 4 || toggle == 2) && data->here)
 		free(data->here);
 }
 
@@ -54,11 +56,19 @@ int	pipex_aux(t_data *data, char *read)
 
 int	pipex_hd_aux(t_list *env, t_data *data)
 {
+	int	i;
+
 	if (data->here_nb)
 	{
 		if (here_doc(env, data) || data->status == 130)
 		{
+			i = -1;
+			while (++i < data->here_nb)
+				safe_close(data->here[i].pipe[0]);
 			free(data->here);
+			free_tab(data->av);
+			free(data->env);
+			free(data->pid);
 			return (1);
 		}
 	}
