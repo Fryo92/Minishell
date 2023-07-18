@@ -40,10 +40,8 @@ void	handler_cmd(int sig)
 void	child_hd(t_list *env, t_data *data)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	if (!g_env)
 		g_env = env;
 	signal(SIGINT, &handler_hd);
